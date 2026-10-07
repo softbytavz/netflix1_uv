@@ -1,6 +1,11 @@
+import streamlit as st
 import pandas as pd
-import str
-netflix_data = pd.read_csv("https://raw.githubusercontent.com/adsoftsito/ciencia-datos/refs/heads/main/movies.csv", encoding='utf-8')
-st.dataframe(netflix_data)
 
+@st.cache_data
+def load_data(nrows=500):
+    return pd.read_csv("https://raw.githubusercontent.com/adsoftsito/ciencia-datos/refs/heads/main/movies.csv",nrows=nrows,encoding="latin-1")
 
+movies_data = load_data()
+
+st.header("Data Description")
+st.dataframe(movies_data)
