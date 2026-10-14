@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st 
 import matplotlib.pyplot as plt
+import numpy as np
 
 @st.cache_data
 def load_data(nrows=1000):
@@ -36,3 +37,18 @@ if st.sidebar.checkbox("Recorridos por hora"):
     plt.xlabel("Hora del día")
     plt.ylabel("Total de recorridos")
     st.pyplot(plt)
+
+if st.sidebar.checkbox("Mapa"):
+    hora = st.sidebar.slider("hour", 0, 23, 11)
+    bici_data.rename({"start_lat": 'lat', "start_lng": 'lon'}, inplace=True)
+    map_data = pd.DataFrame(
+    np.random.randn(1000, 2) / [50, 50] + [40.730610, -73.935242], columns = ['lat', 'lon'])
+    st.subheader("Mapa de recorridos")
+    st.map(map_data)
+
+st.header("Integrantes del equipo")
+st.write("Calderón Aquino Antonio Yaset")
+st.write("González Sánchez Donovan")
+st.write("Vega Romero Miguel Ángel")
+st.write("Zepahua Xotlanihua Luis Enrique")
+    
