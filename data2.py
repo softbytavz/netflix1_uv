@@ -16,3 +16,23 @@ if st.sidebar.checkbox("View RAW data"):
     st.subheader("Cicles Rides in NYC")
     st.write(f"Total de registros: {len(bici_data)}")
     st.dataframe(bici_data)
+
+if st.sidebar.checkbox("Recorridos por hora"):
+    hora = st.sidebar.slider("hour", 0, 23, 17)
+
+    horas = pd.to_datetime(bici_data["started_at"]).dt.hour
+
+   
+    recorridos_por_hora = horas.value_counts().reindex(range(24), fill_value=0)
+
+    
+    colores = ["blue"] * 24
+    colores[hora] = "red"
+
+    plt.figure()
+    plt.bar(recorridos_por_hora.index, recorridos_por_hora.values, color=colores)
+    plt.xticks(range(0, 24))
+    plt.title("Número de recorridos por hora")
+    plt.xlabel("Hora del día")
+    plt.ylabel("Total de recorridos")
+    st.pyplot(plt)
